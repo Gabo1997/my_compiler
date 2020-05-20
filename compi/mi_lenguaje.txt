@@ -1,0 +1,21 @@
+int A = 0;
+int B = 0;
+String C = "";
+
+print(" Escriba el numero uno");
+input(A);
+print("Escriba el numero dos ");
+input(B);
+
+if(A > B){
+ print("El numero uno es mayor");
+}else{
+if(A == B){ 
+   print("Son iguales ");
+
+}else{print("El numero dos es mayor");}
+
+}
+
+
+          

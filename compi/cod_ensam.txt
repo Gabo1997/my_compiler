@@ -1,0 +1,150 @@
+.MODEL SMALL 
+.DATA 
+SALTO DB '',10,13,'$'
+A db 4,1, '0',3 dup(0) 
+ dw 0
+B db 4,1, '0',3 dup(0) 
+ dw 0
+C db 30,2, '""',28 dup(0)
+Mensaje1 DB ' Escriba el numero uno','$'
+Mensaje2 DB 'Escriba el numero dos ','$'
+Mensaje3 DB 'El numero uno es mayor','$'
+Mensaje4 DB 'Son iguales ','$'
+Mensaje5 DB 'El numero dos es mayor','$'
+.CODE  
+hexa_convert macro variable
+    local ciclo
+    local ciclo2  
+    local term
+     ;borrar el valor hexadecimal que ya estaba guardado        
+     mov w.[variable+6],w.0
+    
+    ;convertir a hexadecimal
+    mov w.[variable+6],w.0
+    mov cl,[variable+1]
+    mov ch,0
+    mov si,2
+    mov al,6
+    mov ah,0
+    mov di,ax
+    add di,offset variable
+    ciclo:
+    push cx
+    dec cx
+    mov Ax,1 
+    cmp cx,0
+    je term
+    ciclo2:
+    mov bx,0Ah
+    mul bx
+    loop ciclo2
+    term:
+    pop cx
+    mov bh,0
+    mov bl,[variable+si]
+    sub bl,30h
+    mul bx
+    add [di],ax
+    inc si
+    loop ciclo
+    
+endm  
+convert_dec macro variable
+     ;convertir a decimal desde ax
+      local ciclo3 
+      local ciclo4 
+    mov cx,0
+    mov bx,0Ah
+    mov dx,0
+     ciclo3:
+    div bx
+    push dx
+    mov dx,0 
+    inc cx
+    cmp ax,0
+    jne ciclo3
+    mov di,2
+    mov [variable+1],cl
+     ciclo4:     
+    pop dx 
+    add dl,30h
+    mov [variable+di],dl 
+    inc di
+    loop ciclo4  
+    
+endm 
+EMPIEZA: 
+mov Ax, @Data
+mov Ds, Ax
+mov Dx, Offset Mensaje1
+mov Ah, 9
+int 21h
+mov Dx, Offset SALTO
+mov Ah, 9
+int 21h
+mov ah,0Ah
+lea dx, A
+ int 21h 
+mov Dx, Offset SALTO
+mov Ah, 9
+int 21h
+mov Dx, Offset Mensaje2
+mov Ah, 9
+int 21h
+mov Dx, Offset SALTO
+mov Ah, 9
+int 21h
+mov ah,0Ah
+lea dx, B
+ int 21h 
+mov Dx, Offset SALTO
+mov Ah, 9
+int 21h
+hexa_convert A
+hexa_convert B
+mov ax, w.[A+6] 
+mov bx, w.[B+6] 
+CMP ax, bx
+JA BLOQUE1
+JNA BLOQUEe1
+JMP FIN1
+BLOQUE1:
+mov Dx, Offset Mensaje3
+mov Ah, 9
+int 21h
+mov Dx, Offset SALTO
+mov Ah, 9
+int 21h
+JMP FIN1
+BLOQUEe1:
+hexa_convert A
+hexa_convert B
+mov ax, w.[A+6] 
+mov bx, w.[B+6] 
+CMP ax, bx
+JE BLOQUE2
+JNE BLOQUEe2
+JMP FIN2
+BLOQUE2:
+mov Dx, Offset Mensaje4
+mov Ah, 9
+int 21h
+mov Dx, Offset SALTO
+mov Ah, 9
+int 21h
+JMP FIN2
+BLOQUEe2:
+mov Dx, Offset Mensaje5
+mov Ah, 9
+int 21h
+mov Dx, Offset SALTO
+mov Ah, 9
+int 21h
+JMP FIN2
+FIN2:
+JMP FIN1
+FIN1:
+mov Ax, 4C00h  
+int 21h   
+.STACK   
+END EMPIEZA 
