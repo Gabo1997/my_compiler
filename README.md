@@ -1,4 +1,4 @@
-Hello there <br>
+<p>Hello there</p> <br>
 This is a program (compiler) that translates my own programming language into Assembly language (made in java). <br>
 The sintax is very easy to understand, and contains only the basics. <br>
 The grammar, syntax trees and regular expressions are in the "grama_arbo_E.R" file. <br><br>
@@ -8,7 +8,7 @@ In "mi_lenguaje" file you can write my language. For example here, this code has
 ![](imgs/mylanguage_code.png)
 <br>
 ![](imgs/table_error.png)
-<br>
+<br><br><br>
 Once you have written without errors, the "cod_ensam.txt" file will be written automatically in assembly language, and then you can copy and paste it into an assembly language emulator 8086, in my case I used this https://emu8086.waxoo.com/ 
 <br>
 ![](imgs/assembler_result.png)
