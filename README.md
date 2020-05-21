@@ -10,7 +10,7 @@ In "mi_lenguaje" file you can write my language. For example here, this code has
 ![](imgs/table_error.png)
 <br><br><br>
 Once you have written without errors, the "cod_ensam.txt" file will be written automatically in assembly language, and then you can copy and paste it into an assembly language emulator 8086, in my case I used this https://emu8086.waxoo.com/ 
-<br>
+<br><br>
 ![](imgs/assembler_result.png)
 <br><br>
 
